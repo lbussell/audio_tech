@@ -22,8 +22,8 @@ Bonus: Why do you hear clicks/pops in the generated melody?
 
 ### Generating Sawtooth Waves
 
-- Sawtooth waves can be approximated by adding together sines of increasing harmonics from the fundamental frequency,
-  - Starting the sine with a phase of zero, and adjusting the amplitudes with 1/i, i being the harmonic index.
+- Sawtooth waves can be approximated by adding together sines of increasing harmonics from the fundamental frequency
+  - Starting the sine with a phase of zero, and adjusting the amplitudes with `1/i`, `i` being the harmonic index.
 
 - `generateSawtooth(amplitude, frequencyInHz, lengthInS)`
   - Approximates a sawtooth wave with the 20 lowest harmonics.
