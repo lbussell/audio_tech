@@ -1,16 +1,20 @@
-function [t,x] = generateSinusoidal(amplitude, frequencyInHz, lengthInS)
+function [ t,x ] = generateSinusoidal( amplitude, frequencyInHz, lengthInS )
 
-% Generate a sinusoidal according to the parameters,
-% given that you assume 44100 data points per second (sample rate).
+% Generates a sinusoidal wave according to the arguments
+% Assumes 44100 data points per second
 
-% The output is the time t in seconds
-% and the generated signal as vectors of the same length.
+% Returns t, time in seconds
+%         x, the sinusoidal wave
 
-t = null;
-x = null;
+sampleRate = 44100;
+samplePeriod = 1/sampleRate;
+t = 0:samplePeriod:lengthInS;
 
-% Plot the result of the function x over t for
-% amplitude=0.5, frequencyInHz=2,lengthInS=1
+omega1 = 2.*pi.*frequencyInHz;
+x = amplitude * sin(omega1*t);
+
+% sound(x, sampleRate);
+% plot(t, x);
 
 end
 
