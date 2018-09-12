@@ -1,25 +1,32 @@
-Assignment 1
+Assignment 1: Sinusoids
+======
 
-1. [25] Write a function [t,x] = generateSinusoidal(amplitude, frequencyInHz, lengthInS) generating a sinusoidal 
-according to the parameters, given that you assume 44100 data points per second (sample rate).
-The output is the time t in seconds and the generated signal as vectors of the same length.
-Plot the result of the function x over t for amplitude=0.5, frequencyInHz=2,lengthInS=1
+### Generating Sinusoidal Waves
+- `generateSinusoidal(amplitude, frequencyInHz, lengthInS)`
+  - Generates a sinusoidal according to the parameters, assuming a sample rate of 44100 Hz.
+  - Returns *t*, the time in seconds, and *x*, the generated signal, both as vectors.
+- The result of plotting `generateSinusoidal(0.5, 2, 1)` is:
+![alt text](https://github.com/lbussell/audio_tech/blob/master/assignment1/sinusoid.png)
 
-2a. [25] Write a function [t,x] = generateYD(startFrequencyInHz) that returns a concatenated sequence of signals
-of different frequencies by calling the generateSinusoidal function and appending the result.
-Each segment should have a length of 0.5s;
-the frequencies are: startFrequencyInHz * [1 1 9/8 5/4 1 5/4 9/8 3/4 1 1 9/8 5/4 1].
+### Generating a Song
+- `generateYD(startFrequencyInHz)`
+  - Generates and plays part of the tune "Yankee Doodle" starting at the specified frequency.
+  - Calls generateSinusoidal() at different frequencies, concatenates the results, and plays at a sample rate of 44100 Hz.
+  -  Returns *t*, the time in seconds, and *x*, the generated signal, both as vectors.
+- The result of calling `generateYD(440)` is stored in YD.wav (https://github.com/lbussell/audio_tech/blob/master/assignment1/YD.wav)
+  - Alternatively, calling `generateYD(x)` will generate and play another YD.wav (the old one will be overwritten)
+- The parameter `startFrequencyInHz` will change the note that the sequence starts at.
+  - For example, calling `generateYD(554.37)` will result in the melody starting on C# (a major third higher than A=440Hz)
 
-2b. [15] Generate the sequence with startFrequencyInHz = 440Hz and play the result with Matlab's
-sound function (sample rate: 44100).
-What is the generated sequence of musical intervals (Prime, Fifth, etc.)?
-Export the result to a wave file.
+Bonus: Why do you hear clicks/pops in the generated melody?
 
-2c. [10] What should the startFrequency be if you want to start this melody one major third higher (c# instead of a)?
+### Generating Sawtooth Waves
 
-3. [25] Write a function [t,x] = generateSawtooth(amplitude, frequencyInHz, lengthInS)generating
-a sawtooth wave approximated with the 20 lowest harmonics. All other conditions as in 1.
-Plot the result of the function x over t for amplitude=0.5, frequencyInHz=2,lengthInS=1
-Note: start the sine with a phase of zero, adjust the sine amplitudes with 1/i with i being the harmonic index; at the end of the function, normalize the maximum to amplitude of 1.
+- Sawtooth waves can be approximated by adding together sines of increasing harmonics from the fundamental frequency
+  - Starting the sine with a phase of zero, and adjusting the amplitudes with `1/i`, `i` being the harmonic index.
 
-Bonus question [5] (truncated at 100 points): Why do you hear clicks/pops in the melody generated in 2b?
+- `generateSawtooth(amplitude, frequencyInHz, lengthInS)`
+  - Approximates a sawtooth wave with the 20 lowest harmonics.
+  - Returns *t*, the time in seconds, and *x*, the generated signal, both as vectors.
+- The result of plotting `generateSawtooth(0.5, 2, 1)` is:
+![alt text](https://github.com/lbussell/audio_tech/blob/master/assignment1/sawtooth.png) 
