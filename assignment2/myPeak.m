@@ -5,7 +5,6 @@ function [res] = myPeak(samplevector)
 
 % Describe how you verified the correctness of your implementation.
 
-res = samplevector;
+res = max(samplevector);
 
 end
-
