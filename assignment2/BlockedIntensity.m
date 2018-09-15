@@ -1,19 +1,20 @@
 function [rms_block, peak_block] = BlockedIntensity(x)
+% Splits up vector into blocks of samples
+% Returns RMS and Peak of each of the blocks in a vector
+blockSize = 2048;
+rms_block = 0;
+peak_block = 0;
 
-% 4. [15] Write a function [rms_block,peak_block] = BlockedIntensity(x)
-  % that splits the vector x into consecutive blocks of length 2048 samples
-  % and that returns a vector with the rms values per block (length equals
-  % number of blocks).
-  
-% Make sure that the last, possibly incomplete block is
-  % processed with zeros.
-  
-% Use your functions myRms, myPeak.
+% Make sure the last, possibly incomplete block is processed with zeros
+zerosToAdd = zeros(2048 - mod(length(x), blockSize), 1);
+x = [x
+    zerosToAdd];
 
-% Describe how you verified the correctness of your implementation.
-
-rms_block = x;
-peak_block = x;
-
+for n = 0:ceil(length(x)/blockSize)-1
+    startIndex = n * blockSize + 1;
+    endIndex = n * blockSize + blockSize;
+    rms_block = [rms_block myRms(x(startIndex:endIndex))];
+    peak_block = [peak_block myPeak(x(startIndex:endIndex))];
 end
 
+end

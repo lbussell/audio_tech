@@ -4,19 +4,72 @@ b = [0.255741125204258,-0.511482250408518,-0.255741125204251,1.022964500817026,-
 [xs, fs] = audioread('serato_bigband.wav');
 x = sum(xs, 2) / size(xs, 2);
 x_a = filter(b,a,x);
+sound(x, fs);
 
 rms_x = myRms(x);
 rms_x_a = myRms(x_a);
 
-% sound(x_a, fs);
+peak_x = myPeak(x);
+peak_x_a = myPeak(x_a);
 
-% 6. [15] Add calls to the above functions to your main function.
-% Then, add plot commands to display
-    % (i) the audio file x,
-    % (ii) the rms of both x and x_a in one plot,
-    % (iii) the peak of both x and x_a in one plot,
-    % (iv) the dBFS of the rms of both x and x_a in one plot,
-    % (v) the dBFS of the peak of both x and x_a in one plot.
-% Add proper titles and axis labels to all plots.
+[x_rms_block, x_peak_block] = BlockedIntensity(x);
+[xa_rms_block, xa_peak_block] = BlockedIntensity(x_a);
 
-% 7. [20] Discuss the plots. What is different, what is common? Why?
+x_rms_dBFS = dBFS(x_rms_block);
+xa_rms_dBFS = dBFS(xa_rms_block);
+
+x_peak_dBFS = dBFS(x_peak_block);
+xa_peak_dBFS = dBFS(xa_peak_block);
+
+% Calculate times for x-axis (in seconds)
+tshort = 0 : 1/fs    : length(x)           * 1/fs    - 1/fs;
+tlong = 0  : 2048/fs : length(x_rms_block) * 2048/fs - 2048/fs;
+
+% (i) Plot audio (x)
+subplot(5,1,1);
+plot(tshort, x);
+title('Source Audio')
+xlabel('Time (s)');
+ylabel('Amplitude');
+
+% (ii) Plot rms
+subplot(5,1,2);
+plot(tlong, x_rms_block);
+hold on
+plot(tlong, xa_rms_block);
+title('RMS values of original and filtered audio')
+legend('Original', 'Filtered');
+xlabel('Time (s)');
+ylabel('RMS');
+
+% (iii) Plot peaks
+subplot(5,1,3);
+plot(tlong, x_peak_block);
+hold on
+plot(tlong, xa_peak_block);
+title('Peak values of original and filtered audio')
+legend('Original', 'Filtered');
+xlabel('Time (s)');
+ylabel('Peak');
+
+% (iv) Plot dBFS rms
+subplot(5,1,4);
+hold on
+plot(tlong, x_rms_dBFS);
+plot(tlong, xa_rms_dBFS);
+title('RMS of original and filtered audio (in dBFS)')
+legend('Original', 'Filtered');
+xlabel('Time (s)');
+ylabel('dBFS');
+
+% (v) Plot dBFS peak
+subplot(5,1,5);
+plot(tlong, x_peak_dBFS);
+hold on
+plot(tlong, xa_peak_dBFS);
+title('Peak values of original and filtered audio (in dBFS)');
+legend('Original', 'Filtered')
+xlabel('Time (s)');
+ylabel('dBFS');
+
+% Discuss the plots. What is different, what is common? Why?
