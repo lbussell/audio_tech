@@ -4,7 +4,7 @@ b = [0.255741125204258,-0.511482250408518,-0.255741125204251,1.022964500817026,-
 [xs, fs] = audioread('serato_bigband.wav');
 x = sum(xs, 2) / size(xs, 2);
 x_a = filter(b,a,x);
-sound(x, fs);
+% sound(x, fs);
 
 rms_x = myRms(x);
 rms_x_a = myRms(x_a);
