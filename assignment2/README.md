@@ -4,6 +4,7 @@ Assignment 2: Level
 ### Main
 - Plots the RMS and Peaks of both audio files, in both raw values and dBFS (sample size of 2048).
   - Calls `BlockedIntensity()` and `dBFS()`
+![plot](https://github.com/lbussell/audio_tech/blob/master/assignment2/plot.png)
   
 ### Finding RMS
 - `myRms(samplevector)`
