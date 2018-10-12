@@ -15,4 +15,3 @@ FreqVector = null;
 TimeVector = null;
 MagnitudeSpectrogram = null;
 end
-
