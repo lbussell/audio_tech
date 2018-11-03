@@ -1,10 +1,39 @@
+sampleRate = 44100;
+samplePeriod = 1 / sampleRate;
+
+t = 0 + samplePeriod : samplePeriod : 1;
+
 % 2. [5] generate a noise signal x of length 44100 samples
 % (use the Matlab function randn)
+
+x = randn(size(t));
 
 % 3. [15] filter your noise signal x with alpha = 0.99 and 
 % compute the difference to the output of Matlab's filter function 
 % (b = (1-alpha), a = [1   -alpha]. 
 % Plot and discuss the difference.
+
+% b is input weight, a is output weight
+alpha = 0.99;
+xFiltered = mySinglePole(x, alpha);
+xMatlabFiltered = filter(1 - alpha, alpha, x);
+
+difference = xFiltered - xMatlabFiltered;
+
+subplot(3,1,1);
+hold on
+title('my filter');
+plot(t, xFiltered);
+
+subplot(3,1,2);
+hold on
+title('matlab''s filter');
+plot(t, xMatlabFiltered);
+
+subplot(3,1,3);
+hold on
+title('diff');
+plot(t, difference);
 
     % Note: if your difference is not negligible,
     % use the filter function instead of your implementation for the 
