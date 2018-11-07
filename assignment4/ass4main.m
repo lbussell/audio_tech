@@ -101,14 +101,14 @@ ylabel('Amplitude');
 % Determine the cutoff frequencies graphically from both plots (zoom in). 
 % Discuss the shape of the phase response and speculate on its impact 
 % on the output.
-[h1, w1] = freqz((1 - 0.9), [1 -0.9], 1024, 44100); % cutoff = ~775 hz
-[h2, w2] = freqz((1 - 0.99), [1 -0.99], 1024, 44100); % cutoff = ~77.5 hz
+[h1, w1] = freqz((1 - 0.9), [1 -0.9], 1024, 44100);
+[h2, w2] = freqz((1 - 0.99), [1 -0.99], 1024, 44100);
 
 db1 = mag2db(abs(h1));
 db2 = mag2db(abs(h2));
 
-cutoff1 = interp1(db1,w1,-3);
-cutoff2 = interp1(db2,w2,-3);
+cutoff1 = interp1(db1,w1,-3); % approximate the cutoff
+cutoff2 = interp1(db2,w2,-3); % approximate the cutoff
 
 figure(3);
 
@@ -134,7 +134,10 @@ ylabel('dB');
 % (freq = 3000, Q = 4, gain = 12). Verify and discuss the output.
 
 noisePeak = myPeak(x, 3000, 4, 12, fs);
-cathyPeak = myPeak(cathy, 3000, 4, 12, fs);
+cathyPeak = myPeak(cathy, 3000, 1, 12, fs);
+
+noiseCustomPeak = myCustomPeak(x, 3000, 4, 12, fs);
+cathyCustomPeak = myCustomPeak(cathy, 3000, 1, 12, fs);
 
 figure(4);
 
@@ -152,43 +155,43 @@ plot(t, noisePeak);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-figure(5);
+% figure(5);
 
-% generate a delta pulse
-delta = zeros(1, 1024);
-delta(1) = intmax;
-deltaFFT = fft(delta);
+% % generate a delta pulse
+% delta = zeros(1, 1024);
+% delta(1) = intmax;
+% deltaFFT = fft(delta);
 
-% filter and compute the fft of the delta pulse
-deltaFiltered1 = myPeak(delta, 500, 4, 12, fs);
-deltaFiltered2 = myPeak(delta, 1000, 4, 12, fs);
-deltaFiltered3 = myPeak(delta, 3000, 4, 12, fs);
-deltaFiltered4 = myPeak(delta, 8000, 4, 12, fs);
-filteredFFT1 = fft(deltaFiltered1);
-filteredFFT2 = fft(deltaFiltered2);
-filteredFFT3 = fft(deltaFiltered3);
-filteredFFT4 = fft(deltaFiltered4);
+% % filter and compute the fft of the delta pulse
+% deltaFiltered1 = myPeak(delta, 500, 4, 12, fs);
+% deltaFiltered2 = myPeak(delta, 1000, 4, 12, fs);
+% deltaFiltered3 = myPeak(delta, 3000, 4, 12, fs);
+% deltaFiltered4 = myPeak(delta, 8000, 4, 12, fs);
+% filteredFFT1 = fft(deltaFiltered1);
+% filteredFFT2 = fft(deltaFiltered2);
+% filteredFFT3 = fft(deltaFiltered3);
+% filteredFFT4 = fft(deltaFiltered4);
 
-% plot 
-subplot(4,1,1);
-hold on
-plot(abs(filteredFFT1));
-legend("Filter @ 500 Hz");
-
-subplot(4,1,2);
-hold on
-plot(abs(filteredFFT2));
-legend("Filter @ 1000 Hz");
-
-subplot(4,1,3);
-hold on
-plot(abs(filteredFFT3));
-legend("Filter @ 3000 Hz");
-
-subplot(4,1,4);
-hold on
-plot(abs(filteredFFT4));
-legend("Filter @ 8000 Hz");
+% % plot 
+% subplot(4,1,1);
+% hold on
+% plot(abs(filteredFFT1));
+% legend("Filter @ 500 Hz");
+% 
+% subplot(4,1,2);
+% hold on
+% plot(abs(filteredFFT2));
+% legend("Filter @ 1000 Hz");
+% 
+% subplot(4,1,3);
+% hold on
+% plot(abs(filteredFFT3));
+% legend("Filter @ 3000 Hz");
+% 
+% subplot(4,1,4);
+% hold on
+% plot(abs(filteredFFT4));
+% legend("Filter @ 8000 Hz");
 
 % 9. [10] Implement the 2nd order filter above 'manually' without the 
 % filter function. Compare your function outputs with the output of
