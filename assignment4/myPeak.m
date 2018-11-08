@@ -23,6 +23,6 @@ a(2) = -2 * cos(w0);
 a(3) = 1 - alpha / A;
 
 outputvector = filter(b, a, inputvector) ./ a(1);
-fvtool(b, a);
+% fvtool(b, a);
 
 end

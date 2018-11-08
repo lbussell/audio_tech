@@ -16,7 +16,7 @@ x = randn(size(t));
 % b is input weight, a is output weight
 alpha = 0.99;
 xFiltered = mySinglePole(x, alpha);
-xMatlabFiltered = filter(1 - alpha, alpha, x);
+xMatlabFiltered = filter(1 - alpha, [1 -alpha], x);
 
 difference = xFiltered - xMatlabFiltered;
 
@@ -56,14 +56,14 @@ length_cath_s = length(cathy) / sampleRate;
 t_cath = 0 + samplePeriod : samplePeriod : length_cath_s;
 
 figure(2)
-% cath_05 = filter(1 - 0.5, 0.5, cathy);
-% cath_09 = filter(1 - 0.9, 0.9, cathy);
-% cath_099 = filter(1 - 0.99, 0.99, cathy);
-% cath_0999 = filter(1 - 0.999, 0.999, cathy);
-cath_05 = mySinglePole(cathy, 0.5);
-cath_09 = mySinglePole(cathy, 0.9);
-cath_099 = mySinglePole(cathy, 0.99);
-cath_0999 = mySinglePole(cathy, 0.999);
+cath_05 = filter(1 - 0.5, [1 -0.5], cathy);
+cath_09 = filter(1 - 0.9, [1 -0.9], cathy);
+cath_099 = filter(1 - 0.99, [1 -0.99], cathy);
+cath_0999 = filter(1 - 0.999, [1 -0.999], cathy);
+% cath_05 = mySinglePole(cathy, 0.5);
+% cath_09 = mySinglePole(cathy, 0.9);
+% cath_099 = mySinglePole(cathy, 0.99);
+% cath_0999 = mySinglePole(cathy, 0.999);
 
 subplot(4,1,1);
 plot(t_cath, cath_05);
@@ -130,7 +130,7 @@ ylabel('dB');
 
 % 7. [10] What happens if you set alpha > 1? Why? Explain.
 
-% Filter your noise and audio signal 
+% Filter your noise and audio signal
 % (freq = 3000, Q = 4, gain = 12). Verify and discuss the output.
 
 noisePeak = myPeak(x, 3000, 4, 12, fs);
@@ -141,17 +141,37 @@ cathyCustomPeak = myCustomPeak(cathy, 3000, 1, 12, fs);
 
 figure(4);
 
-subplot(4, 1, 1);
-plot(t_cath, cathy);
-
-subplot(4, 1, 2);
-plot(t_cath, cathyPeak);
-
 subplot(4, 1, 3);
-plot(t, x);
+hold on
+plot(t_cath, cathy);
+legend("Original Signal");
+xlabel('Time (s)');
+ylabel('Amplitude');
+ylim([-2,2]);
 
 subplot(4, 1, 4);
+hold on
+plot(t_cath, cathyPeak);
+legend("Filtered Signal");
+xlabel('Time (s)');
+ylabel('Amplitude');
+ylim([-2,2]);
+
+subplot(4, 1, 1);
+hold on
+plot(t, x);
+legend("Original Noise");
+xlabel('Time (s)');
+ylabel('Amplitude');
+ylim([-10,10]);
+
+subplot(4, 1, 2);
+hold on
 plot(t, noisePeak);
+legend("Filtered Noise");
+xlabel('Time (s)');
+ylabel('Amplitude');
+ylim([-10,10]);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -192,7 +212,3 @@ plot(t, noisePeak);
 % hold on
 % plot(abs(filteredFFT4));
 % legend("Filter @ 8000 Hz");
-
-% 9. [10] Implement the 2nd order filter above 'manually' without the 
-% filter function. Compare your function outputs with the output of
-% question 8 and verify correct implementation.

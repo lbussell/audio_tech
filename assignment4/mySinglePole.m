@@ -11,7 +11,7 @@ outputvector(1) = (1 - alpha) * inputvector(1);
 
 % index starting at (n = 2) so that we can operate on (n - 1) safely
 for n = 2:length(inputvector)
-    outputvector(n) = (1 - alpha) * inputvector(n) + alpha * outputvector(n);
+    outputvector(n) = (1 - alpha) * inputvector(n) + alpha * outputvector(n - 1);
 end
 
 end

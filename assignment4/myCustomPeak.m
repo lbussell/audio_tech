@@ -1,12 +1,7 @@
 function y = myCustomPeak(x, freqvalue, qvalue, gain, samplerateinHz)  
-% 8, [15] Implement a second order filter in 
-% outputvector = myPeak(inputvector, freqvalue, qvalue, gain, samplerateinHz)  
-% with Matlab's filter() function. Compute the coefficients as given here: 
-% http://shepazu.github.io/Audio-EQ-Cookbook/audio-eq-cookbook.html 
-% in the section peakingEQ, but make sure that that your arguments b, a are 
-% in the format Matlab filter() expects (compare filter() description with 
-% equation (4) on this page. Filter your noise and audio signal 
-% (freq = 3000, Q = 4, gain = 12). Verify and discuss the output.
+% 9. [10] Implement the 2nd order filter above 'manually' without the 
+% filter function. Compare your function outputs with the output of
+% question 8 and verify correct implementation.
 
 A = sqrt(10^(gain / 20));
 w0 = 2 * pi * (freqvalue / samplerateinHz);
