@@ -11,4 +11,4 @@ A collection of functions that analyze an existing audio file.
 A collection of functions that computes and analyzes the fourier transforms of audio files.
 
 ### Assignment 4: Filtering
-A collection of functions that filter audio files and analyze the filtered files.
+A collection of functions that filter audio files and analyze the results.
